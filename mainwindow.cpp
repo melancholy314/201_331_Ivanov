@@ -58,6 +58,32 @@ int MainWindow::check_pin_code() {
 
 
 int MainWindow::show_game_window() {
+
+    //Создание маперов для кнопок
+    game_mapper = new QSignalMapper(this);
+    QObject::connect(game_mapper,SIGNAL(mappedInt(int)),this,SLOT(on_click_game_btn(int))); //сигнал передачу id кнопки при нажатии на кнопку
+
+    list_of_number[9]; //Массив хранит в себе значения рандомных чисел
+
+    //Создание кнопок
+    for (int i = 0; i < 9; i++) {
+        QPushButton* game_btn = create_game_btn(i); //Создание кнопки
+        game_btn_list.push_back(game_btn); // Добавление в общий лист
+
+        quint32 number = QRandomGenerator::global()->bounded(-1000,1000); //Создание рандомного числа
+        list_of_number[i] = (int)number;//Добавление в масив рандомных чисел
+
+    }
+
+    //Добавление кнопок в графическое окно
+    for (int i = 0; i < game_btn_list.length();) {
+        QHBoxLayout *Hlayout = new QHBoxLayout;
+        for (int j = 0; j < 3; j++, i++) {
+            Hlayout->addWidget(game_btn_list[i]);//Добавляем в гориз лайаут кнопку из листа
+        }
+        ui->verticalLayout->addLayout(Hlayout);
+    }
+
     return 0;
 }
 
