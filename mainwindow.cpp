@@ -72,7 +72,7 @@ int MainWindow::show_game_window() {
         QPushButton* game_btn = create_game_btn(i); //Создание кнопки
         game_btn_list.push_back(game_btn); // Добавление в общий лист
 
-        quint32 number = QRandomGenerator::global()->bounded(-1000,1000); //Создание рандомного числа
+        qint32 number = QRandomGenerator::global()->bounded(-1000,1000); //Создание рандомного числа
 
         list_of_number[i] = (int)number;//Добавление в масив рандомных чисел
 
@@ -111,11 +111,17 @@ QPushButton* MainWindow::create_game_btn(int id) {
 int MainWindow::on_click_game_btn (int id) {
 
     //Расшифровка
-    unsigned char decrypt_number[512] = {0};
-    int decrypt_len = decrypt( (unsigned char*)list_of_encrypt_number[id].data(), list_of_encrypt_number[id].length(),key,iv,decrypt_number);
-    QByteArray decrypt_number_bit =  QByteArray::fromRawData((const char*)decrypt_number, decrypt_len);
+    unsigned char decrypt_number[256];
+    qDebug() << list_of_encrypt_number[id].data();
+    qDebug() << list_of_encrypt_number[id].length();
+    int decrypt_len = decrypt((unsigned char*)list_of_encrypt_number[id].data(), list_of_encrypt_number[id].length(),key,iv,decrypt_number);
+    //QByteArray decrypt_number_bit =  QByteArray::fromRawData((const char*)decrypt_number, decrypt_len);
 
-    qDebug() << "decrypt_number_bit --- " << decrypt_number_bit;
+    decrypt_number[decrypt_len] = '\0';
+
+    QByteArray decrypt_bit =  QByteArray::fromRawData((const char*)decrypt_number, decrypt_len);
+
+    qDebug() << "decrypt_number_bit --- " << decrypt_bit.data();
 
     count_of_click = count_of_click + 1; //Счет кликов
 
