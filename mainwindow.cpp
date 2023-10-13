@@ -225,3 +225,6 @@ int MainWindow::decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned 
     return decryptext_len;
 }
 
+int MainWindow::crypt_error(void) {
+    return 1;
+}
