@@ -197,7 +197,31 @@ int MainWindow::encrypt(unsigned char *text, int text_len, unsigned char *key,
 int MainWindow::decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
                         unsigned char *iv, unsigned char *decryptext)
 {
+    EVP_CIPHER_CTX *ctx;
 
-    return 0;
+    int len;
+
+    int decryptext_len;
+
+    if(!(ctx = EVP_CIPHER_CTX_new()))
+        crypt_error();
+
+
+    if(1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key, iv))
+        crypt_error();
+
+
+    if(1 != EVP_DecryptUpdate(ctx, decryptext, &len, ciphertext, ciphertext_len))
+        crypt_error();
+    decryptext_len = len;
+
+
+    if(1 != EVP_DecryptFinal_ex(ctx, decryptext + len, &len))
+        crypt_error();
+    decryptext_len += len;
+
+    EVP_CIPHER_CTX_free(ctx);
+
+    return decryptext_len;
 }
 
