@@ -58,7 +58,6 @@ int MainWindow::check_pin_code() {
 
 
 int MainWindow::show_game_window() {
-
     //Создание маперов для кнопок
     game_mapper = new QSignalMapper(this);
     QObject::connect(game_mapper,SIGNAL(mappedInt(int)),this,SLOT(on_click_game_btn(int))); //сигнал передачу id кнопки при нажатии на кнопку
@@ -83,12 +82,10 @@ int MainWindow::show_game_window() {
         }
         ui->verticalLayout->addLayout(Hlayout);
     }
-
     return 0;
 }
 
 QPushButton* MainWindow::create_game_btn(int id) {
-
     QPushButton *current_game_btn = new QPushButton("Click");//Создание кнопки
 
     game_mapper->setMapping(current_game_btn, id); //Вместе с кнопкой передаем id
@@ -98,7 +95,6 @@ QPushButton* MainWindow::create_game_btn(int id) {
 }
 
 int MainWindow::on_click_game_btn (int id) {
-
     count_of_click = count_of_click + 1; //Счет кликов
 
     sum = ui->label_of_sum->text().toInt();// Получаем переменную суммы
@@ -121,24 +117,8 @@ int MainWindow::on_click_game_btn (int id) {
 }
 
 int MainWindow::reset() {
-    // Обнуление счетчика
-    count_of_click = 0;
-
-    //Обнуление суммы
-    sum = 0;
-    ui->label_of_sum->setText(QString::number(sum));
-
-    //Удаление всех кнопок
-    for (int var = 0; var < game_btn_list.length(); ++var) {
-        delete[] game_btn_list[var];
-    }
-    game_btn_list.clear();
-
-    //Вызов функции создание и отрисовки кнопок
-    show_game_window();
     return 0;
 }
-
 
 void MainWindow::on_pushButton_clicked()
 {
