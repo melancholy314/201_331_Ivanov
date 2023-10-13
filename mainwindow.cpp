@@ -6,7 +6,7 @@
 #include <openssl/evp.h>
 #include "QByteArray"
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget *parent) //Конструктор
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
