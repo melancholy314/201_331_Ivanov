@@ -117,6 +117,21 @@ int MainWindow::on_click_game_btn (int id) {
 }
 
 int MainWindow::reset() {
+    // Обнуление счетчика
+    count_of_click = 0;
+
+    //Обнуление суммы
+    sum = 0;
+    ui->label_of_sum->setText(QString::number(sum));
+
+    //Удаление всех кнопок
+    for (int var = 0; var < game_btn_list.length(); ++var) {
+        delete[] game_btn_list[var];
+    }
+    game_btn_list.clear();
+
+    //Вызов функции создание и отрисовки кнопок
+    show_game_window();
     return 0;
 }
 
